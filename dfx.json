@@ -1,0 +1,67 @@
+{
+  "canisters": {
+    "chats": {
+      "type": "custom",
+      "candid": "src/services/chats/chats.did",
+      "wasm": "target/wasm32-unknown-unknown/release/chats-opt.wasm",
+      "build": "./generate-wasm.sh chats"
+    },
+    "p2p": {
+      "type": "custom",
+      "candid": "src/services/p2p/p2p.did",
+      "wasm": "target/wasm32-unknown-unknown/release/p2p-opt.wasm",
+      "build": "./generate-wasm.sh p2p"
+    },
+    "user_mgmt": {
+      "type": "custom",
+      "candid": "src/services/user_mgmt/user_mgmt.did",
+      "wasm": "target/wasm32-unknown-unknown/release/user_mgmt-opt.wasm",
+      "build": "./generate-wasm.sh user_mgmt"
+    },
+    "website": {
+      "dependencies": [
+        "chats",
+        "p2p",
+        "user_mgmt"
+      ],
+      "frontend": {
+        "sourceDir": "src/website",
+        "entrypoint": "src/website/index.tsx"
+      },
+      "source": [
+        "dist/website/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "packtool": ""
+    }
+  },
+  "networks": {
+    "alpha": {
+      "providers": [
+        "https://mercury.dfinity.network"
+      ],
+      "type": "persistent"
+    },
+    "ic": {
+      "providers": [
+        "https://ic0.app"
+      ],
+      "type": "persistent"
+    },
+    "messaging": {
+      "providers": [
+        "http://dcs-messaging-1.dfinity.systems:8080"
+      ],
+      "type": "persistent"
+    },
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  },
+  "version": 1
+}
